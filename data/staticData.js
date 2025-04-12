@@ -1,0 +1,35 @@
+{
+    allergies:[
+      "Penicillin",
+      "Aspirin",
+      "Ibuprofen",
+      "Sulfa drugs",
+      "Antibiotics",
+      "Opioids",
+      "Insulin",
+      "Morphine",
+      "Local anesthetics",
+      "Peanuts",
+      "Tree nuts",
+      "Dairy products",
+      "Eggs",
+      "Seafood",
+      "Wheat",
+      "Soy",
+      "Gluten",
+      "Pollen",
+      "Dust mites",
+      "Mold",
+      "Pet dander",
+      "Insect stings",
+      "Cockroach allergens",
+      "Pollution/airborne particles",
+      "Latex",
+      "Metals (e.g., nickel)",
+      "Fragrances",
+      "Cosmetics",
+      "Chemical sensitivities",
+      "Insect bites"
+    ]
+  }
+  
