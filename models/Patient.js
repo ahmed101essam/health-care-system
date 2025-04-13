@@ -113,21 +113,46 @@ patientSchema.pre("save", async function (next) {
 });
 
 patientSchema.methods.generateVerificationToken = function () {
+  console.log("A7a");
+
   try {
     const verificationToken = crypto.randomInt(100000, 999999).toString();
 
-    this.verificationToken = crypto
+    this.emailVerificationToken = crypto
       .createHash("sha256")
       .update(verificationToken)
       .digest("hex");
 
-    this.verificationTokenExpires = Date.now() + 15 * 60 * 1000;
+    this.emailVerificationTokenExpires = Date.now() + 15 * 60 * 1000;
 
     return verificationToken; // Return the plain token to send to the user
   } catch (error) {
     console.error("Error generating verification token:", error);
     throw new Error("Failed to generate verification token");
   }
+};
+
+patientSchema.methods.validateVerificationToken = function (token) {
+  // if () {
+  //   return false;
+  // }
+  const hashedToken = crypto
+    .createHash("sha256")
+    .update(token.toString())
+    .digest("hex");
+
+  if (hashedToken !== this.emailVerificationToken) {
+    return false;
+  } else {
+    this.emailVerificationToken = undefined;
+    this.emailVerificationTokenExpires = undefined;
+    return true;
+  }
+};
+
+patientSchema.methods.correctPassword = async function (candidatePassword) {
+  const correct = await bcrypt.compare(candidatePassword, this.password);
+  return correct;
 };
 
 module.exports = mongoose.model("Patient", patientSchema);
