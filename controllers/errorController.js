@@ -12,14 +12,10 @@ const handleValidationError = (error) => {
 
 module.exports = (err, req, res, next) => {
   console.log(err);
-
-  console.log("error controller");
-
   err.statusCode = err.statusCode || 500;
   err.status = err.status || "error";
-
   let error = { ...err };
-  err.message = err.message;
+  error.message = err.message;
   if (err.name === "ValidationError") {
     error = handleValidationError(error);
   }

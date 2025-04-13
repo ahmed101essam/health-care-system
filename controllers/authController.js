@@ -135,6 +135,10 @@ exports.resendVerification = catchAsync(async (req, res, next) => {
     ],
   });
 
+  if (!patient) {
+    return next(new AppError("There is no user with that credentials", 400));
+  }
+
   const token = patient.generateVerificationToken();
 
   await patient.save();
