@@ -98,12 +98,25 @@ const patientSchema = new mongoose.Schema({
     type: [String], // Could be replaced with an enum or reference if you have predefined values
     default: [],
   },
+  passwordResetToken: {
+    type: String,
+  },
+  passwordResetTokenExpireAt: {
+    type: Date,
+  },
 });
 
 patientSchema.pre("save", async function (next) {
-  if (!this.isNew) return next();
+  console.log("w00002");
+  console.log(this);
+
+  console.log(this.isModified("password"));
+
+  if (!this.isNew && !this.isModified("password")) return next();
 
   try {
+    console.log("w00002");
+
     const hashedPassword = await bcrypt.hash(this.password, 12);
     this.password = hashedPassword;
     return next();
@@ -113,8 +126,6 @@ patientSchema.pre("save", async function (next) {
 });
 
 patientSchema.methods.generateVerificationToken = function () {
-  console.log("A7a");
-
   try {
     const verificationToken = crypto.randomInt(100000, 999999).toString();
 
@@ -129,6 +140,44 @@ patientSchema.methods.generateVerificationToken = function () {
   } catch (error) {
     console.error("Error generating verification token:", error);
     throw new Error("Failed to generate verification token");
+  }
+};
+
+patientSchema.methods.generatePasswordResetToken = function () {
+  try {
+    const token = crypto.randomInt(100000, 999999).toString();
+
+    this.passwordResetToken = crypto
+      .createHash("sha256")
+      .update(token)
+      .digest("hex");
+
+    this.passwordResetTokenExpireAt = Date.now() + 10 * 60 * 1000;
+
+    console.log(this.passwordResetToken, this.passwordResetTokenExpireAt);
+
+    return token; // Return the plain token to send to the user
+  } catch (error) {
+    console.error("Error generating password reset token:", error);
+    throw new Error("Failed to generate password reset token");
+  }
+};
+
+patientSchema.methods.validatePasswordResetToken = function (token) {
+  // if () {
+  //   return false;
+  // }
+  const hashedToken = crypto
+    .createHash("sha256")
+    .update(token.toString())
+    .digest("hex");
+
+  if (hashedToken !== this.passwordResetToken) {
+    return false;
+  } else {
+    this.passwordResetToken = undefined;
+    this.passwordResetTokenExpireAt = undefined;
+    return true;
   }
 };
 

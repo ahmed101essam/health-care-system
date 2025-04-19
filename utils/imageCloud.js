@@ -1,4 +1,3 @@
-const fs = require("fs");
 const path = require("path");
 const cloudinary = require("cloudinary").v2;
 const AppError = require("./AppError");
@@ -34,5 +33,41 @@ exports.uploadImage = async (req, res, next) => {
   } catch (error) {
     console.error("Cloudinary upload error:", error);
     return next(new AppError("Image upload failed", 500));
+  }
+};
+
+exports.uploadDoctorFiles = async (req, res, next) => {
+  try {
+    if (!req.files || Object.keys(req.files).length === 0) return next();
+
+    const uploadPromises = Object.entries(req.files).map(
+      async ([fieldName, fileArray]) => {
+        // We assume each field has only 1 file
+        const file = fileArray[0];
+
+        const public_id = `gp/${fieldName}-${Date.now()}-${Math.round(
+          Math.random() * 1e9
+        )}`;
+        const dataUri = `data:${file.mimetype};base64,${file.buffer.toString(
+          "base64"
+        )}`;
+
+        const result = await cloudinary.uploader.upload(dataUri, {
+          folder: "gp",
+          public_id,
+          format: "png",
+          resource_type: "auto",
+        });
+
+        // Attach the Cloudinary URL back to req.body
+        req.body[fieldName] = result.secure_url;
+      }
+    );
+
+    await Promise.all(uploadPromises);
+    next();
+  } catch (error) {
+    console.error("Cloudinary upload error:", error);
+    return next(new AppError("File upload failed", 500));
   }
 };
