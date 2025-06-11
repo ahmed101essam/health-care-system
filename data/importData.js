@@ -3,6 +3,7 @@ const dotenv = require("dotenv");
 dotenv.config({});
 const mongoose = require("mongoose");
 const Admin = require("../models/Admin");
+const Location = require("../models/Location");
 
 (async () => {
   await mongoose.connect(process.env.DATABASE_URL).then(() => {
@@ -11,10 +12,10 @@ const Admin = require("../models/Admin");
 
   const importAdmin = async () => {
     let admins = await fs.readFile(
-      "/home/ironman/Desktop/graduation project backend/data/admin.json"
+      "/home/ironman/Desktop/graduation project backend/data/locations.json"
     );
     admins = await JSON.parse(admins);
-    await Admin.create(admins);
+    await Location.create(admins);
   };
 
   if (process.argv[2] === "--import") {

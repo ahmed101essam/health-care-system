@@ -1,0 +1,77 @@
+[
+  {
+    "fees": 300,
+    "governorate": "Cairo",
+    "area": "Nasr City",
+    "street": "El Tayaran Street",
+    "buildingNumber": "12B",
+    "type": "Clinic",
+    "avgVisitTime": 30,
+    "slots": [
+      { "day": "Sunday", "from": "10:00", "to": "14:00" },
+      { "day": "Wednesday", "from": "16:00", "to": "20:00" }
+    ],
+    "locPoint": {
+      "type": "Point",
+      "coordinates": [31.3456, 30.0561]
+    },
+    "doctor": "680095babf9bfd66a91d8a14",
+    "status": "VERIFIED",
+    "taxIdNumber": "TAX123456",
+    "commercialRegistrationNumber": "CR123456"
+  },
+  {
+    "fees": 500,
+    "governorate": "Giza",
+    "area": "Dokki",
+    "street": "Tahrir Street",
+    "buildingNumber": "5A",
+    "type": "Clinic",
+    "avgVisitTime": 25,
+    "slots": [{ "day": "Monday", "from": "12:00", "to": "18:00" }],
+    "locPoint": {
+      "type": "Point",
+      "coordinates": [31.2054, 30.027]
+    },
+    "doctor": "680098bfbf9bfd66a91d8a30",
+    "status": "VERIFIED",
+    "taxIdNumber": "TAX234567",
+    "commercialRegistrationNumber": "CR234567"
+  },
+  {
+    "fees": 450,
+    "governorate": "Cairo",
+    "area": "Maadi",
+    "street": "Street 9",
+    "buildingNumber": "20",
+    "type": "Clinic",
+    "avgVisitTime": 35,
+    "slots": [{ "day": "Thursday", "from": "09:00", "to": "13:00" }],
+    "locPoint": {
+      "type": "Point",
+      "coordinates": [31.26, 29.962]
+    },
+    "doctor": "680098bfbf9bfd66a91d8a30",
+    "status": "VERIFIED",
+    "taxIdNumber": "TAX345678",
+    "commercialRegistrationNumber": "CR345678"
+  },
+  {
+    "fees": 400,
+    "governorate": "Cairo",
+    "area": "Heliopolis",
+    "street": "Orouba Street",
+    "buildingNumber": "18",
+    "type": "Clinic",
+    "avgVisitTime": 40,
+    "slots": [{ "day": "Tuesday", "from": "10:00", "to": "15:00" }],
+    "locPoint": {
+      "type": "Point",
+      "coordinates": [31.3215, 30.0984]
+    },
+    "doctor": "680098e2bf9bfd66a91d8a38",
+    "status": "VERIFIED",
+    "taxIdNumber": "TAX456789",
+    "commercialRegistrationNumber": "CR456789"
+  }
+]

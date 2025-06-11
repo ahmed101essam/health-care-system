@@ -18,7 +18,13 @@ exports.getAllDoctors = catchAsync(async (req, res, next) => {
 
   const apiFeatures = new APIFeatures(query, reqQuery);
 
-  const doctors = await apiFeatures.filter().sort().fields().pagination().query;
+  const doctors = await apiFeatures
+    .filter(
+      "firstName lastName phone photo specialization description university role status"
+    )
+    .sort()
+    .fields()
+    .pagination().query;
 
   res.status(200).json({
     status: "success",
@@ -42,13 +48,10 @@ exports.doctorIdExists = catchAsync(async (req, res, next) => {
 exports.validDoctorId = catchAsync(async (req, res, next) => {
   const doctorId = req.params.doctorId;
   const doctor = await Doctor.findById(doctorId).select(doctorColumns);
-
   if (!doctor || doctor.status !== "VERIFIED") {
     return next(new AppError("The doctor id you provided is invalid"));
   }
-
   req.doctor = doctor;
-
   next();
 });
 

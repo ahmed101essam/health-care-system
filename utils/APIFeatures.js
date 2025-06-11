@@ -34,14 +34,13 @@ class APIFeatures {
     return this;
   }
 
-  fields() {
+  fields(defaultFields) {
     let fields;
     if (this.reqQuery.fields) {
       this.reqQuery.fields = this.reqQuery.fields.replace(",", " ");
       fields = this.reqQuery.fields;
     } else {
-      fields =
-        "firstName lastName phone photo specialization description university role status";
+      fields = defaultFields;
     }
 
     this.query = this.query.select(fields);
